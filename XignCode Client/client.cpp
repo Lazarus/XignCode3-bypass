@@ -109,7 +109,8 @@ namespace network
 		sockaddr_in addr;
 		addr.sin_family = AF_INET;
 		addr.sin_port = htons(this->port);
-		addr.sin_addr.s_addr = inet_addr("192.168.1.44"); // inet_addr("127.0.0.1");
+		//addr.sin_addr.s_addr = inet_addr("192.168.1.44"); // inet_addr("127.0.0.1");
+		inet_pton(AF_INET, "192.168.1.5", &(addr.sin_addr.s_addr));
 		std::fill(addr.sin_zero, addr.sin_zero + sizeof(addr.sin_zero), 0);
 
 		return (connect(this->sock, reinterpret_cast<sockaddr*>(&addr), sizeof(sockaddr_in)) != SOCKET_ERROR);

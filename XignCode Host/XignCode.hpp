@@ -1,6 +1,6 @@
 #pragma once
 
-#include "XignDefs.hpp"
+#include "../XignCode Library/XignDefs.hpp"
 
 namespace XignCode
 {

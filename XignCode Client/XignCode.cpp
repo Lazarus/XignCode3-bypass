@@ -2,16 +2,41 @@
 
 #include "XignCode.hpp"
 
-#include "XignReader.hpp"
-#include "XignWriter.hpp"
+#include "../XignCode Library/XignReader.hpp"
+#include "../XignCode Library/XignWriter.hpp"
 
 #include <thread>
+
+#include "discord_rpc.h"
+
+#pragma comment (lib, "discord-rpc.lib")
 
 namespace XignCode
 {
 	BOOL XIGNAPI _XignCode_initialize(const wchar_t* license_key, const wchar_t* xigncode_directory, int unknown)
 	{
 		printf("_XignCode_initialize - %ws, %ws, %d\n", license_key, xigncode_directory, unknown);
+
+		// Discord RPC
+		DiscordEventHandlers handlers;
+		memset(&handlers, 0, sizeof(handlers));
+
+		auto appId = "471081044854964225";
+
+		Discord_Initialize(appId, &handlers, 1, "");
+		printf("Initializing Discord RPC for appId: %s.\n", appId);
+
+		DiscordRichPresence discordPresence;
+		memset(&discordPresence, 0, sizeof(discordPresence));
+
+		std::time_t result = std::time(nullptr);
+
+		discordPresence.state = "In-Game";
+		discordPresence.details = "Main Menu";
+		discordPresence.startTimestamp = result;
+		discordPresence.largeImageKey = "ncvaf4a";
+		Discord_UpdatePresence(&discordPresence);
+
 		return TRUE;
 	}
 	
